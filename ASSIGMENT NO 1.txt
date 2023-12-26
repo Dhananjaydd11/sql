@@ -1,0 +1,184 @@
+--BASICS QUESTIONS--
+Q1 1) Create two Databases Name :- Brands , and  Products
+
+CREATE DATABASE BRANDS
+CREATE DATABASE PRODUCTS
+Q2) Create two tables in SQL Server  name  as ITEMS_Table in Brands database and PRODUCT_Table in Products database.
+
+--------TABLE NO 1 IN BRANDS
+CREATE TABLE ITEMS_TABLE
+(
+ITEM_ID INT,
+ITEM_DESCRIPTION VARCHAR(250),
+VENDOR_NOS INT,
+VENDOR_NAME CHAR(100),
+BOTTLE_SIZE INT,
+BOTTLE_PRICE MONEY
+)
+SELECT * FROM ITEMS_TABLE
+
+---------TABLE NO 2 IN PRODUCTS
+CREATE TABLE PRODUCT_TABLE
+(
+PRODUCT_ID INT,
+COUNTRY VARCHAR(50),
+PRODUCT VARCHAR(50),
+UNITS_SOLD INT,
+MANIFACTURING_PRICE MONEY,
+SALE_PRICE MONEY,
+GROSS_PRICE MONEY,
+SALES MONEY,
+COGS MONEY,
+PROFIT MONEY,
+DATE_ DATE,
+MONTH_NUMBER INT,
+MONTH_NAME CHAR(50),
+YEAR INT
+)
+SELECT * FROM PRODUCT_TABLE
+
+---Q3  After Creating both the tables Add records in that tables (records are available above)
+
+
+INSERT INTO ITEMS_TABLE VAlUES (1, 'Travis Hasse Apple pie', 305, 'MHWLTD', 750, 9.77),
+                               (2, 'Daristi Xtabentun', 391, 'Anchor Distilling (preiss Imports)', 750, $14.12),
+							   (3, 'Hiram Walker Peach Brandy', 370, 'Pernod Ricard Usa/austin Nichols', 1000, $6.50),
+							   (4, 'Oak Cross Whisky', 305, 'Mhw Ltd', 750, $25.33),
+							   (5, 'Mhw Ltd', 380, 'Phillips Beverage Company', 200, $1.97),
+							   (6, 'Heaven Hill Old Style White Label', 259, 'Heaven Hill Distilleries Inc.', 750, $6.37),
+							   (7, 'Hyde Herbal Liqueur', 194, 'Fire Tail Brands Llc', 750, $5.06),
+							   (8, 'Dupont Calvados Fine Reserve', 403, 'Robert Kacher Selections', 750, $23.61) 
+
+INSERT INTO PRODUCT_TABLE VALUES (1, 'CANADA', 'CARRENTERA', 1618.5, $3.00, $20.00, $32370.00, $32720.00, $16185.00, $16185.00, '01-01-2014', 1, 'JANUARY', 2014),
+                                 (2, 'GERMANY', 'CARRENTERA', 1321, $3.00, $20, $26420.00, $26420.00, $13210.00, $13210.00, '01-01-2014', 1, 'JANUARY',2014),
+				 (3, 'FRANCE', 'CARRENTERA' , 2178, $3.00, $15.00, $32670.00, $32670.00, $21780.00, $10890.00, '01-06-2014', 6, 'JUNE', 2016),
+				 (4, 'GERMANY', 'CARRENTERA', 888, $3.00, $15.00, $13320.00, $13320.00, $8880.00, $4440.00, '01-06-2014', 6, 'JUNE', 2017),                                                                         (5, 'MEXICO', 'CARRENTERA', 2470, $3.00 ,	$15.00, $37050.00, 	$37050.00, 	$24700.00, 	$12350.00, '01-06-2014', 6,	'June', 2018),
+			         (6,'GERMANY','CARRENTERA', 1513, $3.00, $350.00, $529550.00, $529550.00, $393380.00, $136170.00, '01-12-2014',	12,	 'December', 2019),
+				 (7, 'GERMANY', 'MONTANA', 921,	$5.00, $15.00, $13815.00, $13815.00, $9210.00, $4605.00, '01-03-2014', 3, 'March', 	2020),
+				 (8, 'CANADA', 'MONTANA', 2518,	 $5.00, $12.00, $30216.00,  $30216.00, $7554.00, $22662.00, '01-06-2014', 6, 'June', 2021)
+
+
+
+								 
+
+
+--Q4  Delete those product having the Units Sold 1618.5 , 888 and 2470.
+
+DELETE FROM PRODUCT_TABLE WHERE UNITS_SOLD = 1618
+DELETE FROM PRODUCT_TABLE WHERE UNITS_SOLD = 888
+DELETE FROM PRODUCT_TABLE WHERE UNITS_SOLD = 2470
+
+--Q5  DROP the table and Create it again.
+
+DROP TABLE PRODUCT_TABLE
+DROP TABLE ITEMS_TABLE
+
+
+----INTERMEDIATE QUESTIONS----
+--------BIG TABLE------
+
+SELECT * FROM PRODUCT_TABLE
+
+Q1) Find the Total Sale Price  and  Gross Sales 
+
+SELECT SUM (SALE_PRICE)
+FROM PRODUCT_TABLE
+
+SELECT SUM (GROSS_PRICE)
+FROM PRODUCT_TABLE
+
+--Q2) In which year we have got the highest sales
+
+
+SELECT YEAR FROM PRODUCT_TABLE
+ WHERE SALES = 
+ (SELECT MAX(SALES) FROM PRODUCT_TABLE)
+
+ --Q3)  Which Product having the sales of $ 37,050.00
+
+
+SELECT SALES, PRODUCT FROM  PRODUCT_TABLE
+WHERE SALES = 37050.00 
+
+---Q4---ANS Which Countries lies between profit of $ 4,605 to $  22 , 662.00 -------------------------------------NOT SOLVE
+
+
+SELECT * FROM PRODUCT_TABLE
+WHERE PROFIT BETWEEN 4605.00 AND 22662.00 
+
+---Q5 ---ANS---Which Product Id having the sales of $ 24 , 700.00
+SELECT  SALES, PRODUCT_ID FROM PRODUCT_TABLE
+WHERE SALES = 24700.00
+
+
+---** SMALL TABLE **----
+
+
+SELECT * FROM ITEMS_TABLE
+
+--Q1-) Find the item_description having the bottle size of 750
+
+SELECT ITEM_DESCRIPTION, BOTTLE_SIZE FROM ITEMS_TABLE
+WHERE BOTTLE_SIZE = 750
+
+--Q2-Find the vendor Name having the vendor_nos 305 , 380 , 391
+SELECT VENDOR_NAME FROM ITEMS_TABLE
+WHERE VENDOR_NOS IN (305, 380, 391)
+
+--Q3-What is total Bottle_price 
+
+SELECT SUM(BOTTLE_SIZE) FROM ITEMS_TABLE
+
+--Q5-) Which item id having the bottle_price of $ 5.06
+
+SELECT ITEM_ID, BOTTLE_PRICE  FROM ITEMS_TABLE
+WHERE BOTTLE_PRICE = 5.06
+
+--ADVANCE QUESTIONS :------
+
+--Q1-Apply INNER  , FULL OUTER , LEFT JOIN types on both the table 
+----* INNER JOIN
+SELECT* FROM ITEMS_TABLE
+JOIN
+PRODUCT_TABLE
+ON
+ITEMS_TABLE.ITEM_ID = PRODUCT_TABLE.PRODUCT_ID
+
+SELECT ITEM_ID 
+FROM ITEMS_TABLE
+INNER JOIN PRODUCT_TABLE
+ON ITEMS_TABLE.ITEM_ID = PRODUCT_TABLE.PRODUCT_ID
+
+
+---FULL OUTER JOIN ----
+SELECT* FROM ITEMS_TABLE
+ FULL OUTER JOIN
+PRODUCT_TABLE
+ON
+ITEMS_TABLE.ITEM_ID = PRODUCT_TABLE.PRODUCT_ID
+
+
+----* LEFT JOIN---
+SELECT ITEM_ID
+FROM ITEMS_TABLE
+LEFT JOIN PRODUCT_TABLE
+ON ITEMS_TABLE.ITEM_ID = PRODUCT_TABLE.PRODUCT_ID
+
+SELECT * FROM ITEMS_TABLE  ----------LEFT TABLE COMM DIRECLY BY DEFOLT
+LEFT JOIN 
+PRODUCT_TABLE --------RIGHT TABLE COM DIRECLY BY DEFOLT
+ON 
+ITEMS_TABLE.ITEM_ID = PRODUCT_TABLE.PRODUCT_ID
+
+-*---Q3--- Find the item_description and Product having the gross sales of 13,320.00
+
+SELECT ITEM_DESCRIPTION,FROM ITEMS_TABLE
+WHERE GROSS SALES = 13320.00
+
+SELECT ITEM_DESCRIPTION FROM ITEMS_TABLE
+UNION ALL
+SELECT  GROSS_PRICE  FROM PRODUCT_TABLE
+ORDER BY GROSS_PRICE.13320.00
+
+
+SELECT * FROM PRODUCT_TABLE

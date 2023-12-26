@@ -1,0 +1,106 @@
+---------------------SQL ASSIGMENT NO 4--------------------
+---------Create the Student table
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(50),
+    Surname VARCHAR(50),
+    Class VARCHAR(10),
+    Gender CHAR(1),
+    SchoolNumber INT,
+    BirthYear INT
+);
+
+
+-- Insert 20 records into the Student table
+INSERT INTO Student (Name, Surname, Class, Gender, SchoolNumber, BirthYear) VALUES
+    ('John', 'Doe', '10Math', 'M', 101, 2002),
+    ('Jane', 'Smith', '9Sci', 'F', 102, 2003),
+    ('Alice', 'Johnson', '11Lit', 'F', 103, 2001),
+    ('Bob', 'Williams', '10Bio', 'M', 104, 2002),
+    ('Eva', 'Davis', '9Math', 'F', 105, 2003),
+    ('Michael', 'Miller', '10Math', 'M', 106, 2002),
+    ('Sophia', 'Brown', '11His', 'F', 107, 2001),
+    ('William', 'Taylor', '9Bio', 'M', 108, 2003),
+    ('Olivia', 'Anderson', '10Sci', 'F', 109, 2002),
+    ('Daniel', 'Moore', '11Math', 'M', 110, 2001),
+    ('Emily', 'Jones', '9Lit', 'F', 111, 2003),
+    ('James', 'White', '10His', 'M', 112, 2002),
+    ('Emma', 'Martin', '11Bio', 'F', 113, 2001),
+    ('Benjamin', 'Jackson', '9Sci', 'M', 114, 2003),
+    ('Ava', 'Clark', '10Lit', 'F', 115, 2002),
+    ('Christopher', 'Hill', '11Sci', 'M', 116, 2001),
+    ('Mia', 'Wright', '9His', 'F', 117, 2003),
+    ('David', 'Walker', '10Math', 'M', 118, 2002),
+    ('Sophie', 'Hall', '11His', 'F', 119, 2001),
+    ('Alexander', 'Adams', '9Bio', 'M', 120, 2003);
+
+----Q1--
+SELECT * FROM Student
+
+---Q2-- Example 2: List the name, surname, and class of the students
+SELECT Name, Surname, Class FROM Student
+
+--Q3-- Example 3: List female (F) records in the Student table
+SELECT * FROM STUDENT WHERE Gender = 'F'
+
+-- Example 4: List the names of each class in the way of being seen once in the student table
+SELECT DISTINCT Class FROM STUDENT
+
+---Example 5: List the students with Female gender and the class 10Math in the student table
+SELECT * FROM STUDENT WHERE Gender = 'F' AND Class = '10MATH'
+
+---Example 6: List the names, surnames and classes of the students in the class 10Math or 10Sci in the student table
+SELECT NAME,SURNAME,CLASS FROM STUDENT WHERE CLASS IN ('10MATH','10SCI')
+
+----Example 7: List the students name surname and school number in the student table
+
+SELECT NAME,SURNAME,SCHOOLNUMBER FROM STUDENT
+
+---Example 8: List the students name and surname by combining them as name surname in the student table
+SELECT CONCAT(Name, Surname) AS 'Name Surname' FROM Student
+
+---Example 9: List the students with the names starting with “A” letter in the student table
+
+SELECT * FROM STUDENT WHERE NAME LIKE  'A%'
+
+---Example 10: List the book names and pages count with number of pages between 50 and 200 in the book table
+
+CREATE TABLE Book (
+    BookID INT PRIMARY KEY IDENTITY(1,1),
+    BookName VARCHAR(100),
+    PageCount INT
+);
+
+INSERT INTO Book (BookName, PageCount) VALUES
+    ('Book1', 120),
+    ('Book2', 180),
+    ('Book3', 220),
+    ('Book4', 90),
+    ('Book5', 150),
+    ('Book6', 190),
+    ('Book7', 60),
+    ('Book8', 200),
+    ('Book9', 30),
+    ('Book10', 250);
+
+SELECT * FROM Book
+
+SELECT BOOKNAME, PAGECOUNT FROM BOOK WHERE PageCount BETWEEN '50' AND '200'
+
+----Example 11: List the students with names Emma Sophia and Robert in the student table
+
+select name from student where name in ('EMMA' ,'SOPHIA','ROBERT')
+
+----Example 12: List the students with names starting with A D and K in the student table
+SELECT NAME FROM STUDENT WHERE NAME LIKE 'A%'OR NAME LIKE 'D%' OR NAME LIKE 'K%'
+
+---Example 13: List the names surnames classes and genders of males in 9Math or females in 9His in the student table
+
+SELECT NAME,SURNAME,CLASS,GENDER FROM STUDENT WHERE (Gender = 'M' AND Class = '9MATH') OR (Gender = 'F' AND Class = '9HIS')
+
+----Example 14: List the males whose classes are 10Math or 10Bio
+
+SELECT * FROM STUDENT WHERE Gender = 'M' AND  CLASS IN ('10MATH','10BIO')
+
+---Example 15: List the students with birth year 1989 in the student table
+SELECT * FROM  STUDENT  WHERE BirthYear = '2003'

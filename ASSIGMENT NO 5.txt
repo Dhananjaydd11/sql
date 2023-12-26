@@ -1,0 +1,197 @@
+------------------------ASSIGMENT - 05 ----------------------------
+---*TASK 1 *-----
+--1.Create University Database give any University name you want
+CREATE DATABASE UNIVERSITY
+
+--Q2. Under this University Create four tables and each table should have following three Column named as:-
+
+CREATE TABLE College_Table
+(
+College_ID INT not null Primary key,
+College_Name Varchar(250)not null,
+College_Area varchar (250)
+)
+
+CREATE TABLE Department_Table
+(
+Dept_ID INT Primary key,
+Dept_Name Varchar (255) ,
+Dept_Facility varchar(255),
+College_ID INT,
+Foreign key (College_ID) References College_Table(College_ID)
+)
+
+select * from College_Table
+select * from Department_Table
+
+CREATE TABLE Professor_Table
+(
+Professor_ID INT NOT NULL Primary Key,
+Professor_Name Varchar (255),
+Professor_Subject varchar (255)
+)
+
+CREATE TABLE Student_Table
+(
+Student_ID INT Primary key,
+Student_Name Varchar(255),
+Student_stream Varchar(255),
+Professor_ID INT,
+Foreign Key (Professor_ID) References Professor_Table(Professor_ID)
+)
+
+select * from Professor_Table
+select * from Student_Table
+
+select * from College_Table
+select * from Department_Table
+
+INSERT INTO College_Table (College_ID, College_Name, College_Area)
+VALUES
+    (1, 'SPPU University College', 'Downtown Area'),
+    (2, 'MH State College', 'Suburb Area'),
+    (3, ' City College', 'Urban Area'),
+    (4, 'ITI Technical College', 'Industrial Area'),
+    (5, ' Community College', 'Rural Area'),
+    (6, 'KJS Arts College', 'Cultural Area'),
+    (7, 'SSGM Science College', 'Science Park Area'),
+    (8, 'SANGIVANI Engineering College', 'Tech Hub Area'),
+    (9, ' Business College', 'Business District Area'),
+    (10, 'PRAVARA Medical College', 'Medical Campus Area')
+
+	select * from Department_Table
+
+	INSERT INTO Department_Table (Dept_ID, Dept_Name, Dept_Facility, College_ID)
+VALUES
+    (1, 'Computer Science Department', 'High-Tech Lab', 1),
+    (2, 'Physics Department', 'Research Facilities', 2),
+    (3, 'History Department', 'Archives Room', 3),
+    (4, 'Mathematics Department', 'Advanced Calculus Lab', 4),
+    (5, 'Economics Department', 'Financial Simulation Lab', 5),
+    (6, 'Chemistry Department', 'Chemical Analysis Lab', 6),
+    (7, 'Literature Department', 'Library and Reading Room', 7),
+    (8, 'Biology Department', 'Biological Research Lab', 8),
+    (9, 'Engineering Department', 'Engineering Workshop', 9),
+    (10, 'Psychology Department', 'Psychological Research Lab', 10);
+
+select * from Professor_Table
+select * from Student_Table
+
+INSERT INTO Professor_Table (Professor_ID, Professor_Name, Professor_Subject)
+VALUES
+    (1, 'Dr. Rajesh Sharma', 'Mathematics'),
+    (2, 'Prof. Priya Verma', 'Physics'),
+    (3, 'Dr. Ananya Singh', 'Computer Science'),
+    (4, 'Prof. Vikram Patel', 'History'),
+    (5, 'Dr. Nisha Joshi', 'Chemistry'),
+    (6, 'Prof. Rohit Kapoor', 'Literature'),
+    (7, 'Dr. Deepa Kapoor', 'Biology'),
+    (8, 'Prof. Aarav Gupta', 'Economics'),
+    (9, 'Dr. Kavita Gupta', 'Engineering'),
+    (10, 'Prof. Siddharth Reddy', 'Psychology')
+	
+	INSERT INTO Student_Table (Student_ID, Student_Name, Student_Stream, Professor_ID)
+VALUES
+    (1, 'Amit Kumar', 'Computer Science', 1),
+    (2, 'Anushka Sharma', 'Physics', 2),
+    (3, 'Aditi Singh', 'History', 3),
+    (4, 'Rahul Patel', 'Mathematics', 4),
+    (5, 'Pooja Joshi', 'Economics', 5),
+    (6, 'Aryan Kapoor', 'Chemistry', 6),
+    (7, 'Divya Kapoor', 'Literature', 7),
+    (8, 'Arjun Gupta', 'Biology', 8),
+    (9, 'Neha Gupta', 'Engineering', 9),
+    (10, 'Rohan Reddy', 'Psychology', 10)
+
+----------------TASK 2-------------------------------
+
+ ---Q1 	Give the information of College_ID and College_name from College_Table
+
+SELECT College_ID,College_Name FROM College_Table
+
+---Q2   Show  Top 5 rows from Student table.
+SELECT TOP 5* FROM Student_Table
+
+---Q3 	What is the name of  professor  whose ID  is 5
+
+SELECT * FROM Professor_Table WHERE Professor_ID = '5'
+
+---Q4	Convert the name of the Professor into Upper case 
+
+update Professor_Table
+set Professor_Name = upper (professor_name)
+
+---Q5.	Show me the names of those students whose name is start with a
+
+select * from Student_Table where Student_Name LIKE 'A%'
+
+---Q6.	Give the name of those colleges whose end with a
+SELECT * FROM College_Table WHERE College_Name LIKE '%A'
+
+---Q7 Add one Salary Column in Professor_Table
+
+ALTER TABLE Professor_Table
+ADD Salary MONEY
+
+---Q8ALTER TABLE Student_table
+
+ALTER TABLE Student_table
+ADD  Contact VARCHAR(255)
+
+--Q9 .	Find the total Salary of Professor 
+SELECT SUM(salary)as Total_salary FROM Professor_Table
+
+--10.	Change datatype of any one column of any one Table
+Alter table student_table
+Alter column name datatype
+
+---TASK 3 --
+
+---Q1	1.	Show first 5 records from Students table and Professor table Combine
+
+SELECT TOP 5 * FROM Student_Table 
+ORDER BY Student_ID
+union
+SELECT TOP 5 * FROM Professor_Table
+ORDER BY Professor_ID;
+
+
+--Q2.	Apply Inner join on all 4 tables together
+SELECT *
+FROM student_table AS s
+INNER JOIN professor_table AS p ON s.Student_ID = p.Professor_ID
+INNER JOIN college_table AS c ON p.Professor_ID = c.College_ID
+INNER JOIN department_table AS d ON c.College_ID = d.Dept_ID;
+
+--Q3	Show Some null values from Department table and Professor table.
+SELECT * FROM  Department_Table
+WHERE College_ID IS NULL 
+
+SELECT * FROM Professor_Table
+WHERE Salary IS NULL
+
+---Q4 	Create a View from College Table  and give those records whose college name starts with 'C'
+SELECT * FROM College_Table
+
+create VIEW ['COLLEGE_VIEW' char(20)] AS
+SELECT College_Name  FROM College_Table
+WHERE left( College_Name, 1) like '%C'
+
+select * from ['COLLEGE_VIEW' char(20)]
+
+--5.	Create Stored Procedure  of Professor table whatever customer ID will be given by user it should show whole records of it.
+CREATE PROCEDURE GetProfessorRecords
+    @Professor_ID INT
+AS
+BEGIN
+    SELECT *
+    FROM Professor_Table
+    WHERE Professor_ID = @Professor_ID;
+END;
+
+EXEC GetProfessorRecords @Professor_ID = 2
+
+--Q6.	Rename the College_Table to College_Tables_Data .
+
+EXEC SP_RENAME 'COLLEGE_TABLE ', 'COLLEGE_TABLE_DATA'
+SELECT * FROM College_Table_DATA
